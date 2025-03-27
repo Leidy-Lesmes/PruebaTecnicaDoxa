@@ -1,0 +1,24 @@
+<h2>{{ isEditMode ? 'Editar Producto' : 'Agregar Producto' }}</h2>
+
+<form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+  <label>ID:</label>
+  <input formControlName="id" type="number" [disabled]="isEditMode" />
+
+  <label>Nombre:</label>
+  <input formControlName="title" type="text" required />
+
+  <label>Precio:</label>
+  <input formControlName="price" type="number" required />
+
+  <label>Descripción:</label>
+  <textarea formControlName="description" required></textarea>
+
+  <label>Categoría:</label>
+  <input formControlName="category" type="text" required />
+
+  <label>Imagen (URL):</label>
+  <input formControlName="image" type="url" required />
+
+  <button type="submit">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
+  <button type="button" (click)="router.navigate(['/products'])">Cancelar</button>
+</form>
