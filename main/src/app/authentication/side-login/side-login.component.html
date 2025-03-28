@@ -1,0 +1,32 @@
+<div class="blank-layout-container">
+  <div class="login-container">
+    <mat-card class="cardWithShadow boxed-auth">
+      <mat-card-content class="p-32">
+        <div class="text-center">
+          <div class="logo">🛒 FakeStore</div>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="m-t-30">
+          <div class="input-group">
+            <mat-label>Username</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput formControlName="username" />
+            </mat-form-field>
+          </div>
+        
+          <div class="input-group">
+            <mat-label>Password</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput type="password" formControlName="password" />
+            </mat-form-field>
+          </div>
+        
+          <button mat-flat-button color="primary" class="w-100" type="submit" [disabled]="loginForm.invalid">
+            Sign In
+          </button>
+        </form>
+        
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

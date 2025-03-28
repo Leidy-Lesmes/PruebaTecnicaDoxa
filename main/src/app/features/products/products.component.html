@@ -1,0 +1,64 @@
+<div class="container-fluid px-4 position-relative">
+  <div class="row g-3 justify-content-center">
+    @for(product of products; track product.id) {
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4">
+      <mat-card class="cardWithShadow productcard h-100">
+        <div class="position-relative">
+          <a [routerLink]="['/products', product.id]" class="d-block">
+            <img [src]="product.image" [alt]="product.title"
+     class="w-100 product-image"
+     mat-card-image />
+          </a>
+        </div>
+        <mat-card-content class="d-flex flex-column align-items-center justify-content-center text-center p-3">
+          <div class="product-info">
+            <div class="product-name text-truncate mb-2">
+              {{ product.title }}
+            </div>
+            <div class="product-price text-primary mb-2">
+              {{ product.price | currency }}
+            </div>
+            <div class="product-rating d-flex justify-content-center mb-2">
+              @for(i of [1,2,3,4,5]; track i) {
+                <span>
+                  <i-tabler
+                    name="star"
+                    class="icon-12"
+                    [class.fill-warning]="i <= (product.rating?.rate ?? 0)"
+                    [class.text-muted]="i > (product.rating?.rate ?? 0)"
+                  ></i-tabler>
+                </span>
+              }
+            </div>
+            <div class="product-actions d-flex justify-content-center gap-2">
+              <button mat-icon-button color="info"
+                      [routerLink]="['/products', product.id]"
+                      matTooltip="Ver Detalles">
+                <i-tabler name="eye"></i-tabler>
+              </button>
+              <button mat-icon-button color="primary"
+                      [routerLink]="['/products/edit', product.id]"
+                      matTooltip="Editar Producto">
+                <i-tabler name="edit"></i-tabler>
+              </button>
+              <button mat-icon-button color="warn"
+                      (click)="deleteProduct(product.id)"
+                      matTooltip="Eliminar Producto">
+                <i-tabler name="trash"></i-tabler>
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    }
+  </div>
+
+  <button mat-fab 
+          color="primary" 
+          class="floating-add-button" 
+          routerLink="/products/new"
+          matTooltip="Agregar Producto">
+    <i-tabler name="plus"></i-tabler>
+  </button>
+</div>

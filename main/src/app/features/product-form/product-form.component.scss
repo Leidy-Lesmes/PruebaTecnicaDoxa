@@ -1,0 +1,62 @@
+.cardWithShadow {
+    background-color: white !important; 
+  }
+  
+  mat-form-field {
+    background-color: white !important; 
+  }
+  
+  input.mat-input-element,
+  textarea.mat-input-element {
+    background-color: white !important; 
+  }
+  
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: inherit; 
+  }
+  
+  .text-center {
+    display: flex;
+    justify-content: center; 
+    gap: 16px;
+  }
+  
+  .theme-card {
+    max-width: 800px;
+    margin: 0 auto;
+  
+    .product-form {
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+  
+        @media (max-width: 600px) {
+          grid-template-columns: 1fr;
+        }
+  
+        .form-field {
+          width: 100%;
+  
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+  
+          mat-form-field {
+            width: 100%;
+          }
+        }
+      }
+  
+      .form-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 16px;
+      }
+    }
+  
+    mat-card-header {
+      margin-bottom: 16px;
+    }
+  }
