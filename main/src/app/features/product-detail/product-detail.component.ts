@@ -5,34 +5,40 @@ import { Product } from '../../models/Product.model';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, RouterModule],
+  imports: [
+    CommonModule, 
+    MatCardModule, 
+    MatButtonModule, 
+    MatProgressSpinnerModule,
+    RouterModule
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
-export class ProductDetailComponent {
-
-  product!: Product;
+export class ProductDetailComponent implements OnInit {
+  product$: Observable<Product | undefined>;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService
-  ) {}
-
-  ngOnInit(): void {
-    this.loadProduct();
+  ) {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    
+    // Obtener el producto del estado local
+    this.product$ = this.productService.products$.pipe(
+      map(products => products.find(p => p.id === id))
+    );
   }
 
-  loadProduct(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.productService.getProductById(id).subscribe((data) => {
-        this.product = data;
-      });
-    }
+  ngOnInit(): void {
+    // No es necesario cargar el producto manualmente
   }
 }

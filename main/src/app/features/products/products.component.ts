@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -25,26 +26,20 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
-  products: Product[] = [];
+  products$: Observable<Product[]>;
 
-  constructor(private productService: ProductService) {}
-
-  ngOnInit() {
-    this.loadProducts();
+  constructor(private productService: ProductService) {
+    this.products$ = this.productService.products$;
   }
 
-  loadProducts() {
-    this.productService.getAllProducts().subscribe((data: Product[]) => {
-      this.products = data;
-    });
+  ngOnInit() {
+    // No es necesario cargar productos manualmente ahora
   }
 
   deleteProduct(id?: number) {
     if (!id) return;
     if (confirm('¿Seguro que deseas eliminar este producto?')) {
-      this.productService.deleteProduct(id).subscribe(() => {
-        this.products = this.products.filter(p => p.id !== id);
-      });
+      this.productService.deleteProduct(id);
     }
   }
 }

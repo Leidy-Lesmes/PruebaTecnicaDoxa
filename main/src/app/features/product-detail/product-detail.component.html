@@ -1,4 +1,5 @@
 <div class="container mt-4">
+  @if (product$ | async; as product) {
     <mat-card class="details-card">
       <img [src]="product.image" [alt]="product.title" class="product-image" />
       <mat-card-content>
@@ -10,5 +11,7 @@
         <button mat-button color="primary" routerLink="/products">Volver</button>
       </mat-card-content>
     </mat-card>
-  </div>
-  
+  } @else {
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  }
+</div>

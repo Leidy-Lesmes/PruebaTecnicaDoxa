@@ -66,22 +66,26 @@ export class ProductFormComponent implements OnInit {
   }
 
   loadProduct(id: number) {
-    this.productService.getProductById(id).subscribe((product: Product) => {
-      this.productForm.patchValue(product);
+    this.productService.getProductById(id).subscribe((product: Product | undefined) => {
+      if (product) {
+        this.productForm.patchValue(product);
+      }
     });
   }
 
   saveProduct() {
+    if (this.productForm.invalid) return;
+
+    const productData = this.productForm.getRawValue();
+
     if (this.isEditMode) {
-      this.productService.updateProduct(this.productId!, this.productForm.value).subscribe(() => {
-        alert('Producto actualizado');
-        this.router.navigate(['/products']);
-      });
+      this.productService.updateProduct(this.productId!, productData);
+      alert('Producto actualizado');
+      this.router.navigate(['/products']);
     } else {
-      this.productService.createProduct(this.productForm.getRawValue()).subscribe(() => {
-        alert('Producto agregado');
-        this.router.navigate(['/products']);
-      });
+      this.productService.createProduct(productData);
+      alert('Producto agregado');
+      this.router.navigate(['/products']);
     }
   }
 }
